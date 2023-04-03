@@ -1,13 +1,29 @@
 from fastapi import FastAPI
 import uvicorn
+from app.config import db
 
 
-app = FastAPI()
+def init_app():
+    db.init()
+
+    app = FastAPI(
+        title="CRUD app",
+        description="CRUD sort pagination page",
+        version="1"
+    )
+
+    @app.on_event("startup")
+    async def startup():
+        await db.create_all()
+
+    @app.on_event("shutdown")
+    async def shutdown():
+        await db.close()
+
+    return app
 
 
-@app.get("/")
-def home():
-    return "Welcome home!"
+app = init_app()
 
 
 def start():
