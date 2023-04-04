@@ -1,6 +1,10 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from app.config import db
+
+
+origins = ["http://localhost:3000"]
 
 
 def init_app():
@@ -10,6 +14,14 @@ def init_app():
         title="CRUD app",
         description="CRUD sort pagination page",
         version="1"
+    )
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"]
     )
 
     @app.on_event("startup")
