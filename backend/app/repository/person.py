@@ -1,4 +1,5 @@
 import math
+from uuid import uuid4
 from sqlalchemy import update as sql_update, delete as sql_delete
 from sqlalchemy.sql import select, or_, text, func, column
 from app.schema import PersonCreate, PageResponse
@@ -9,9 +10,16 @@ from app.model import Person
 class PersonRepository:
 
     @staticmethod
-    async def create_person(create_form: PersonCreate):
+    async def create(create_form: PersonCreate):
         """ Create person data """
-        db.add(Person(**create_form))
+        db.add(Person(
+            id=str(uuid4()),
+            name=create_form.name,
+            sex=create_form.sex,
+            birth_date=create_form.birth_date,
+            birth_place=create_form.birth_place,
+            country=create_form.country
+        ))
         await commit_rollback()
 
     @staticmethod

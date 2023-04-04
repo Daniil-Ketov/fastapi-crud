@@ -19,7 +19,7 @@ class PersonCreate(BaseModel):
     # Sex validation
     @validator("sex")
     def sex_validation(cls, v):
-        if hasattr(cls, v) is False:
+        if hasattr(Sex, v) is False:
             raise HTTPException(status_code=400, detail="Invalid input sex")
         return v
 

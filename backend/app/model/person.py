@@ -5,8 +5,8 @@ from sqlmodel import SQLModel, Field
 
 
 class Sex(str, Enum):
-    MALE = "Male"
-    FEMALE = "Female"
+    MALE = "MALE"
+    FEMALE = "FEMALE"
 
 
 class Person(SQLModel, table=True):
